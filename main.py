@@ -1,106 +1,72 @@
 from turtle import *
 from random import randint
 
-t = Turtle()
+# Plano cartesiano
+def draw_plano_cartesiano():
+    t.pu()
+    t.color("gray")
+    t.goto(-400, 0)      # eixo X
+    t.pd()
+    t.goto(400, 0)
+    t.pu()
+    t.goto(0, -400)      # eixo Y
+    t.pd()
+    t.goto(0, 400)
+    t.pu()
+    t.color("black")
 
-def draw_quadrado(x, y, lado):
+#Função genérica para polígonos
+def draw_poligono(x, y, lado, n_lados, cor):
+    angulo = 360 / n_lados
     t.pu()
     t.goto(x, y)
     t.pd()
-
     t.color("black")
-
-    cor = textinput("Escolha da cor", "Digite a cor da próxima forma:")
     t.fillcolor(cor)
-
     t.begin_fill()
-
-    for cont in range(4):
+    for cont in range(n_lados):
         t.fd(lado)
-        t.lt(90)
-
+        t.lt(angulo)
     t.end_fill()
 
-
-x = randint(100, 300)
-y = randint(0, 350)
-
-draw_quadrado(x, y, 100)
-
-def draw_quadrado2(x, y, lado):
+# ---------- Função genérica: círculo (centro = x, y) ----------
+def draw_circulo(x, y, raio, cor):
     t.pu()
-    t.goto(x, y)
+    t.goto(x, y - raio)   
     t.pd()
-
     t.color("black")
-
-    cor = textinput("Escolha da cor", "Digite a cor da próxima forma:")
     t.fillcolor(cor)
-
     t.begin_fill()
-
-    for cont in range(4):
-        t.fd(lado)
-        t.lt(90)
-
+    t.circle(raio)
     t.end_fill()
 
+# ---------- Desenha o plano ----------
+draw_plano_cartesiano()
 
-x = randint(-300, -100)
-y = randint(0, 350)
+lado = 60  # lado pequeno o suficiente que cabe em cada quadrante
 
-draw_quadrado2(x, y, 100)
+# Quadrante 1 (x>0, y>0): pentágono
+x = randint(50, 200)
+y = randint(50, 200)
+draw_poligono(x, y, lado, 5, "red")
 
-def draw_quadrado3(x, y, lado):
-    t.pu()
-    t.goto(x, y)
-    t.pd()
+# Quadrante 2 (x<0, y>0): hexágono
+x = randint(-300, -150)
+y = randint(50, 200)
+draw_poligono(x, y, lado, 6, "blue")
 
-    t.color("black")
+# Quadrante 3 (x<0, y<0): heptágono
+x = randint(-300, -150)
+y = randint(-300, -150)
+draw_poligono(x, y, lado, 7, "green")
 
-    cor = textinput("Escolha da cor", "Digite a cor da próxima forma:")
-    t.fillcolor(cor)
-
-    t.begin_fill()
-
-    for cont in range(4):
-        t.fd(lado)
-        t.lt(90)
-
-    t.end_fill()
-
-
-x = randint(-300, -100)
-y = randint(-350, 0)
-
-draw_quadrado3(x, y, 100)
-
-def draw_quadrado4(x, y, lado):
-    t.pu()
-    t.goto(x, y)
-    t.pd()
-
-    t.color("black")
-
-    cor = textinput("Escolha da cor", "Digite a cor da próxima forma:")
-    t.fillcolor(cor)
-
-    t.begin_fill()
-
-    for cont in range(4):
-        t.fd(lado)
-        t.lt(90)
-
-    t.end_fill()
+# Quadrante 4 (x>0, y<0): octógono
+x = randint(50, 200)
+y = randint(-300, -150)
+draw_poligono(x, y, lado, 8, "orange")
 
 
-x = randint(100, 300)
-y = randint(-350, 0)
-
-draw_quadrado4(x, y, 100)
-
-
-
+# FUNÇAO ANTIGA 
 t.pu()
 t.goto(0,0)
 t.pd()
@@ -128,10 +94,3 @@ for cont in range(4):
 
 
 mainloop()
-
-
-
-
-
-
-
