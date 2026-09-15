@@ -1,0 +1,198 @@
+from turtle import *
+t = Turtle()
+#PLANOCARTESIANO 
+def draw_plano_cartesiano():
+    t.pu()
+    t.color("black")
+    t.goto(-400, 0) # eixo X
+    t.pd()
+    t.goto(400, 0)
+    t.stamp()
+    t.pu()
+    t.goto(0, -400) # eixo Y
+    t.pd()
+    t.setheading(90)
+    t.goto(0, 300)
+    t.stamp()
+    t.pu()
+    t.color("black")
+
+draw_plano_cartesiano()
+
+clear()
+#Y = RAIZDEX
+from turtle import *
+from math import sqrt
+t = Turtle()
+t.speed(0)
+def draw_plano_cartesiano2():
+    t.pu()
+    t.goto(-300, 0)
+    t.pd()
+    t.goto(300, 0)
+    t.pu()
+    t.goto(0, -300)
+    t.pd()
+    t.goto(0, 300)
+def raiz_quadrada():
+    draw_plano_cartesiano2()
+    escala = 30
+    t.pu()
+    x = 0
+    y = sqrt(x)
+    t.goto(x * escala, y * escala)
+    t.pd()
+    while x <= 10:
+        y = sqrt(x)
+        t.goto(x * escala, y * escala)
+        x += 0.05
+raiz_quadrada()
+clear()
+
+#Y = 1/X
+from turtle import *
+t = Turtle()
+t.speed(0)
+def draw_plano_cartesiano3():
+    t.pu()
+    t.goto(-300, 0)
+    t.pd()
+    t.goto(300, 0)
+    t.pu()
+    t.goto(0, -300)
+    t.pd()
+    t.goto(0, 300)
+def um_sobre_x():
+    draw_plano_cartesiano3()
+    escala = 30
+    x = 0.1
+    t.pu()
+    t.goto(x * escala, (1 / x) * escala)
+    t.pd()
+    while x <= 10:
+        y = 1 / x
+        t.goto(x * escala, y * escala)
+        x += 0.05
+    x = -10
+    t.pu()
+    t.goto(x * escala, (1 / x) * escala)
+    t.pd()
+    while x <= -0.1:
+        y = 1 / x
+        t.goto(x * escala, y * escala)
+        x += 0.05
+um_sobre_x()
+clear()
+
+#2^X
+from turtle import *
+t = Turtle()
+t.speed(0)
+def draw_plano_cartesiano4():
+    t.pu()
+    t.goto(-300, 0)
+    t.pd()
+    t.goto(300, 0)
+    t.pu()
+    t.goto(0, -300)
+    t.pd()
+    t.goto(0, 300)
+def dois_elevado_x():
+    draw_plano_cartesiano4()
+    escala = 30
+    x = -5
+    t.pu()
+    t.goto(x * escala, (2 ** x) * escala)
+    t.pd()
+    while x <= 5:
+        y = 2 ** x
+        t.goto(x * escala, y * escala)
+        x += 0.05
+dois_elevado_x()
+clear()
+
+#Y =5-(X^2)
+from turtle import *
+t = Turtle()
+t.speed(0)
+def draw_plano_cartesiano5():
+    t.pu()
+    t.goto(-300, 0)
+    t.pd()
+    t.goto(300, 0)
+    t.pu()
+    t.goto(0, -300)
+    t.pd()
+    t.goto(0, 300)
+def cinco_menos_x2():
+    draw_plano_cartesiano5()
+    escala = 30
+    x = -5
+    t.pu()
+    t.goto(x * escala, (5 - x ** 2) * escala)
+    t.pd()
+    while x <= 5:
+        y = 5 - x ** 2
+        t.goto(x * escala, y * escala)
+        x += 0.05
+cinco_menos_x2()
+
+clear()
+#Y=(X^2)-(5*X)+6
+
+from turtle import *
+t = Turtle()
+t.speed(0)
+def draw_plano_cartesiano6():
+    t.pu()
+    t.goto(-300, 0)
+    t.pd()
+    t.goto(300, 0)
+    t.pu()
+    t.goto(0, -300)
+    t.pd()
+    t.goto(0, 300)
+def quadratica():
+    draw_plano_cartesiano6()
+    escala = 30
+    x = -2
+    t.pu()
+    t.goto(x * escala, (x ** 2 - 5 * x + 6) * escala)
+    t.pd()
+    while x <= 7:
+        y = x ** 2 - 5 * x + 6
+        t.goto(x * escala, y * escala)
+        x += 0.05
+quadratica()
+clear()
+
+#Y = (X^3) - (X^2) - X + 1 
+
+from turtle import *
+t = Turtle()
+t.speed(0)
+def draw_plano_cartesiano7():
+    t.pu()
+    t.goto(-300, 0)
+    t.pd()
+    t.goto(300, 0)
+    t.pu()
+    t.goto(0, -300)
+    t.pd()
+    t.goto(0, 300)
+def xcubo():
+    draw_plano_cartesiano7()
+    escala = 30
+    x = -4
+    t.pu()
+    t.goto(x * escala, (x ** 3 - x ** 2 - x + 1) * escala)
+    t.pd()
+    while x <= 4:
+        y = x ** 3 - x ** 2 - x + 1
+        t.goto(x * escala, y * escala)
+        x += 0.05
+xcubo()
+clear()
+
+
+mainloop()
