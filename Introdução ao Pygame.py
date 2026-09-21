@@ -3,10 +3,25 @@ from pygame import *
 #Estrutura padrão para toda vez que for rodar PyGame
 init()
 screen =  display.set_mode((800, 600))
-
+#ACHAR o TEXTO
+caminho_fonte = r"D:\DOWNLOADS_DATA\casinha_batman\batmfa__.ttf"
+fonte_customizada = font.Font(caminho_fonte, 48)
+#TEXTO
+texto_surface = fonte_customizada.render("FAZ NEYMAR", True, (0, 47, 108))
 #Inicio da nuvem
 nuvem_x = 430
+#Solução problema pasta 
+import os
+
+# Pega a pasta exata da foto
+diretorio_script = os.path.dirname(__file__)
+caminho_neymar = os.path.join(diretorio_script, "neymar.png")
+
 #ESPAÇO DO RECURSOS (BATMAN)
+imagem_ney = image.load(caminho_neymar)
+imagem_ney = transform.scale(imagem_ney, (110, 160))
+imagem_ney.set_colorkey("#FFFFFF")
+
 #ev é a nova variável event, pq o event já existe
 running = True
 while running == True:
@@ -46,6 +61,8 @@ while running == True:
     draw.rect(screen, "#784D1A", (510, 355, 50, 145))
     #FOLHAS DA ÁRVORE
     draw.circle(screen,"#479C25",(535,320),80)
+
+    screen.blit(imagem_ney, (365, 350))
     #sintaxe polígono: (aonde(tela), cor, centro(x,y), raio)
     #imagens
     # NUVEM
@@ -54,6 +71,8 @@ while running == True:
     draw.circle(screen, "#FFFFFF", (int(nuvem_x) + 100, 100), 45)
     draw.circle(screen, "#FFFFFF", (int(nuvem_x) + 150, 100), 45)
 
+    #DESENHAR TEXTO 
+    screen.blit(texto_surface, (250, 500))
     #Movimentar a nuvem
     nuvem_x += 0.2
 
