@@ -70,8 +70,6 @@ while running == True:
     #clock.tick(600)
     clock.tick(60)
 
-
-
     for ev in event.get():
 
         if ev.type == QUIT:
@@ -100,24 +98,15 @@ while running == True:
 #               cus_im_batman_sfx.play()
 
 
-
-
-
     #REALIZAR MOVIMENTAÇÕES E SIMULAÇÕES FÍSICAS
     dt = clock.get_time()/1000
     keys = key.get_pressed()
-
-
 
     #DETECTANDO O MOVIMENTO DO MOUSE
     mouse_x, mouse_y = mouse.get_pos()
     print(mouse_x,mouse_y)
 
-
-
-
-
-    #CONTROLAR MOVIMENTO ESQUERDA E DIREITA
+#CONTROLAR MOVIMENTO ESQUERDA E DIREITA
     # antes as setas moviam a nuvem, agora a nuvem anda sozinha e as setas movem o sol
 
     #if keys[K_RIGHT]:
@@ -163,9 +152,6 @@ while running == True:
     #if keys[K_n]:
 
     #   cus_im_batman_sfx.play()    
-
-
-
     # NUVENS ANDAM SOZINHAS: posição = posição + velocidade * dt
     nuvem_x = nuvem_x + nuvem_vel * dt
     nuvem2_x = nuvem2_x + nuvem2_vel * dt
@@ -187,13 +173,10 @@ while running == True:
         nuvem2_x = 30
         nuvem2_vel = -nuvem2_vel
 
-
-
-    #COR DO FUNDO PELA POSIÇÃO DO SOL (EXTRA: passagem contínua)
+    #COR DO FUNDO PELA POSIÇÃO DO SOL
     #três estágios: manhã com o sol em x = 100, tarde com o sol em x = 400 e noite com o sol em x = 700
     #entre um estágio e outro a cor vai mudando aos poucos (progresso vai de 0 a 1)
     if sol_x <= 400:
-
         #de manhã (151, 209, 250) para tarde (245, 178, 64)
         progresso = (sol_x - 100) / 300
         fundo_r = int(151 + (245 - 151) * progresso)
@@ -207,19 +190,11 @@ while running == True:
         fundo_r = int(245 + (10 - 245) * progresso)
         fundo_g = int(178 + (20 - 178) * progresso)
         fundo_b = int(64 + (60 - 64) * progresso)
-
-
-
    #desenhar os elementos na tela
 
    #screen.fill((151, 209, 250))
-
     #screen.fill("#97D1FA")
     screen.fill((fundo_r, fundo_g, fundo_b))
-
-
-
-
 
     #sixtaxe linha(espessa): (aonde(tela), cor, começo(x,y), raio)
 
