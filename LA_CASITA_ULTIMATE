@@ -1,0 +1,291 @@
+from pygame import *
+
+
+
+#Estrutura padrão para toda vez que for rodar PyGame
+init()
+screen =  display.set_mode((800, 600))
+running = True
+clock = time.Clock()
+
+#ACHAR o TEXTO
+caminho_fonte = r"D:\DOWNLOADS_DATA\casinha_batman\batmfa__.ttf"
+fonte_customizada = font.Font(caminho_fonte, 48)
+
+
+
+#TEXTO
+texto_surface = fonte_customizada.render("FAZ NEYMAR", True, (0, 47, 108))
+
+
+
+#ACHAR AUDIO
+mixer.music.load(r"D:\DOWNLOADS_DATA\casinha_batman\batman_1966.mp3")
+
+# Tocar áudio = loop infinito
+
+mixer.music.play(-1)
+
+
+
+#Inicio da nuvem
+nuvem_x = 430
+
+# velocidade da nuvem (pixels por segundo): positivo = direita, negativo = esquerda
+nuvem_vel = 100
+
+# segunda nuvem, começa indo para a esquerda pra testar a batida na parede
+
+nuvem2_x = 200
+nuvem2_vel = -150
+
+
+
+#Inicio do sol (mesma posição que o sol tinha antes)
+sol_x = 100
+sol_y = 100
+
+
+
+#Solução problema pasta
+
+caminho_neymar = r"D:\DOWNLOADS_DATA\neymar.png"
+
+
+
+#ESPAÇO DO RECURSOS (BATMAN)
+imagem_ney = image.load(caminho_neymar)
+imagem_ney = transform.scale(imagem_ney, (110, 160))
+imagem_ney.set_colorkey("#FFFFFF")
+
+
+
+#ev é a nova variável event, pq o event já existe
+
+running = True
+
+while running == True:
+
+    # o clock.tick precisa estar ligado, senão o dt sempre vale 0 e nada se mexe
+    #clock.tick(600)
+    clock.tick(60)
+
+
+
+    for ev in event.get():
+
+        if ev.type == QUIT:
+            running = False
+
+        #o sol vai para a posição do mouse (ev.pos é (x, y))
+        if ev.type == MOUSEMOTION:
+            sol_x, sol_y = ev.pos
+
+    #Ação Instantânea
+
+#       if  event.type == KEYDOWN:
+
+#                if event.key = K_n:
+
+#                   cus_im_batman_sfx.play()
+
+#       if event.type == MOUSEBUTTONDOWN:
+
+#           if event.button == 1:
+
+#               cus_im_batman_sfx.play()
+
+#           elif event.button == 3:
+
+#               cus_im_batman_sfx.play()
+
+
+
+
+
+    #REALIZAR MOVIMENTAÇÕES E SIMULAÇÕES FÍSICAS
+    dt = clock.get_time()/1000
+    keys = key.get_pressed()
+
+
+
+    #DETECTANDO O MOVIMENTO DO MOUSE
+    mouse_x, mouse_y = mouse.get_pos()
+    print(mouse_x,mouse_y)
+
+
+
+
+
+    #CONTROLAR MOVIMENTO ESQUERDA E DIREITA
+    # antes as setas moviam a nuvem, agora a nuvem anda sozinha e as setas movem o sol
+
+    #if keys[K_RIGHT]:
+
+    #    nuvem_x = nuvem_x + 100 * dt
+
+    #elif keys[K_LEFT]:
+
+    #    nuvem_x = nuvem_x - 100 * dt
+
+    # SOL COM O TECLADO: esquerda/direita e cima/baixo (200 pixels por segundo)
+    if keys[K_RIGHT]:
+        sol_x = sol_x + 200 * dt
+
+    elif keys[K_LEFT]:
+        sol_x = sol_x - 200 * dt
+
+    if keys[K_DOWN]:
+        sol_y = sol_y + 200 * dt
+
+    elif keys[K_UP]:
+        sol_y = sol_y -200 * dt
+
+    # LIMITES DO SOL: os raios chegam a 95 pixels do centro, então o centro fica entre 100 e 700 (x) e 100 e 500 (y)
+    if sol_x < 100:
+        sol_x = 100
+
+    elif sol_x > 700:
+        sol_x = 700
+
+    if sol_y < 100:
+        sol_y = 100
+
+    elif sol_y > 500:
+        sol_y = 500
+
+
+
+    #tocar audio do batman quando pressionar n
+
+    #Não fazer dessa forma (deixar dentro do for dos events, por causa do momento do clique)
+
+    #if keys[K_n]:
+
+    #   cus_im_batman_sfx.play()    
+
+
+
+    # NUVENS ANDAM SOZINHAS: posição = posição + velocidade * dt
+    nuvem_x = nuvem_x + nuvem_vel * dt
+    nuvem2_x = nuvem2_x + nuvem2_vel * dt
+
+    # bateu na parede: prende no limite e inverte a velocidade
+    if nuvem_x > 605:
+        nuvem_x = 605
+        nuvem_vel = -nuvem_vel
+
+    elif nuvem_x < 45:
+        nuvem_x = 45
+        nuvem_vel = -nuvem_vel
+
+    if nuvem2_x > 665:
+        nuvem2_x = 665
+        nuvem2_vel = -nuvem2_vel
+
+    elif nuvem2_x < 30:
+        nuvem2_x = 30
+        nuvem2_vel = -nuvem2_vel
+
+
+
+    #COR DO FUNDO PELA POSIÇÃO DO SOL (EXTRA: passagem contínua)
+    #três estágios: manhã com o sol em x = 100, tarde com o sol em x = 400 e noite com o sol em x = 700
+    #entre um estágio e outro a cor vai mudando aos poucos (progresso vai de 0 a 1)
+    if sol_x <= 400:
+
+        #de manhã (151, 209, 250) para tarde (245, 178, 64)
+        progresso = (sol_x - 100) / 300
+        fundo_r = int(151 + (245 - 151) * progresso)
+        fundo_g = int(209 + (178 - 209) * progresso)
+        fundo_b = int(250 + (64 - 250) * progresso)
+
+    else:
+
+        #de tarde (245, 178, 64) para noite (10, 20, 60)
+        progresso = (sol_x - 400) / 300
+        fundo_r = int(245 + (10 - 245) * progresso)
+        fundo_g = int(178 + (20 - 178) * progresso)
+        fundo_b = int(64 + (60 - 64) * progresso)
+
+
+
+   #desenhar os elementos na tela
+
+   #screen.fill((151, 209, 250))
+
+    #screen.fill("#97D1FA")
+    screen.fill((fundo_r, fundo_g, fundo_b))
+
+
+
+
+
+    #sixtaxe linha(espessa): (aonde(tela), cor, começo(x,y), raio)
+
+    #RAIOS DE SOL (agora todos seguem o centro do sol: sol_x e sol_y)
+    draw.line(screen, "#FFF251", (sol_x - 80, sol_y - 80), (sol_x + 80, sol_y + 80), 8)
+    draw.line(screen,"#FFF251", (sol_x - 80, sol_y + 80), (sol_x + 80, sol_y - 80), 8)
+    draw.line(screen,"#FFF251", (sol_x, sol_y - 95), (sol_x, sol_y + 95), 8)
+    draw.line(screen,"#FFF251", (sol_x - 95, sol_y), (sol_x + 95, sol_y), 8)
+
+    #SOL
+    draw.circle(screen, "#FFF251",(sol_x, sol_y),50)
+
+    #sintaxe círculo: (aonde(tela), cor, centro(x,y), raio)
+    #sintaxe retângulo: (x, y, largura, altura):
+
+    #GRAMA
+    draw.rect(screen, "#489D25", (0,500,800,100))
+    
+    #CASA
+    draw.rect(screen, "#646464", (100, 300, 200, 200))
+    
+    #JANELA AZUL
+    draw.rect(screen, "#0D1764", (120, 380, 50, 70))
+    
+    #PORTA MARROM
+    draw.rect(screen, "#784D1A", (200, 360, 70, 140))
+    
+    #MAÇANETA
+    draw.circle(screen,"#000000",(215,430),7)
+    
+    #TELHADO
+    draw.polygon(screen, "#F2883B",((100,300),(200,200),(300,300)))
+    
+    #MADEIRA DA ÁRVORE
+    draw.rect(screen, "#784D1A", (510, 355, 50, 145))
+
+    #FOLHAS DA ÁRVORE
+    draw.circle(screen,"#479C25",(535,320),80)
+    screen.blit(imagem_ney, (365, 350))
+    #sintaxe polígono: (aonde(tela), cor, centro(x,y), raio)
+
+    #imagens
+
+    # NUVEM
+
+    draw.circle(screen, "#FFFFFF", (int(nuvem_x), 100), 45)
+    draw.circle(screen, "#FFFFFF", (int(nuvem_x) + 50, 100), 45)
+    draw.circle(screen, "#FFFFFF", (int(nuvem_x) + 100, 100), 45)
+    draw.circle(screen, "#FFFFFF", (int(nuvem_x) + 150, 100), 45)
+
+    # NUVEM 2 (menor e mais baixa)
+
+    draw.circle(screen, "#FFFFFF", (int(nuvem2_x), 170), 30)
+    draw.circle(screen, "#FFFFFF", (int(nuvem2_x) + 35, 170), 30)
+    draw.circle(screen, "#FFFFFF", (int(nuvem2_x) + 70, 170), 30)
+    draw.circle(screen, "#FFFFFF", (int(nuvem2_x) + 105, 170), 30)
+
+    #DESENHAR TEXTO Posico
+    screen.blit(texto_surface, (250, 500))
+    #Movimentar a nuvem (troquei)
+    #nuvem_x += 0.2
+    #acabei tendo que trocar
+    # TELEPORTE: Volta para a posição inicial (430) assim que sai da tela (800)
+    #if nuvem_x > 800:
+    # nuvem_x = 430
+    display.update()
+#para retângulo é preciso (x,y, width, height)
+#pyGame, (0,0) em cima na esquerda, e y cresce pra baixo
+#sixtaxe linha(espessa): (aonde(tela), cor, começo(x,y), raio)
