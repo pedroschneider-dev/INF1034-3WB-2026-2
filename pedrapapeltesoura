@@ -1,0 +1,51 @@
+import random
+OPCOES = ["pedra", "papel", "tesoura"]
+
+def pedir_jogada():
+    while True:
+        jogada = input("Escolha pedra,papel ou tesoura: ").strip().lower()
+        if jogada in OPCOES:
+            return jogada
+        else:
+            print("Opção inválida!")
+
+
+def jogada_computador():
+    return OPCOES[random.randint(0, 2)]
+def quemvenceu(jogador, computador):
+    if jogador == computador:
+        return "empate"
+    if (jogador == "pedra" and computador == "tesoura") or (jogador == "tesoura" and computador == "papel") or (jogador == "papel" and computador == "pedra"):
+        return "jogador"
+    else:
+        return "computador"
+def perguntar_reinicio():
+    while True:
+        resposta = input("Jogar de novo? (s/n): ").strip().lower()
+        if resposta == "s":
+            return True
+        if resposta == "n":
+            return False
+        print("Digite s ou n.")
+def jogar():
+    pontos_jogador = 0
+    pontos_computador = 0
+    jogando = True
+    while jogando:
+        jogador = pedir_jogada()
+        computador = jogada_computador()
+        print("Computador jogou:", computador)
+        resultado = quemvenceu(jogador, computador)
+        if resultado == "jogador":
+            print("Vitória")
+            pontos_jogador += 1
+        elif resultado == "computador":
+            print("Derrota")
+            pontos_computador += 1
+        else:
+            print("Empate!")
+        print("Placar - Você:", pontos_jogador, "| Computador:", pontos_computador)
+        jogando = perguntar_reinicio()
+    print("Fim de jogo!")
+
+jogar()
