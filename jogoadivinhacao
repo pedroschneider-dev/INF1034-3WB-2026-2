@@ -1,0 +1,68 @@
+import random
+
+minimo = 1
+maximo = 1023
+def avaliar_palpite(secreto, palpite):
+    if secreto < palpite:
+        return -1
+    if secreto > palpite:
+        return 1
+    return 0
+def ler_numero(mensagem):
+    while True:
+        texto = input(mensagem).strip()
+        if texto.isdigit():
+            numero = int(texto)
+            if minimo <= numero <= maximo:
+                return numero
+        print("Digite um número inteiro entre 1 e 1023.")
+
+def usuario_adivinha():
+    secreto = random.randint(minimo,maximo)
+    tentativas = 0
+    resultado = -1
+    while resultado != 0:
+        palpite = ler_numero("Seu palpite: ")
+        tentativas += 1
+        resultado = avaliar_palpite(secreto, palpite)
+        print(resultado)
+    print("Você acertou em", tentativas, "tentativas!")
+def ler_resposta():
+    while True:
+        resposta = input("Resposta (-1, 0 ou 1): ").strip()
+        if resposta == "-1" or resposta == "0" or resposta == "1":
+            return int(resposta)
+        print("Digite apenas -1, 0 ou 1.")
+def computador_adivinha():
+    print("Pense em um número entre 1 e 1023.")
+    print("Responda: -1 (meu palpite é maior), 1 (meu palpite é menor), 0 (acertei).")
+    menor = minimo
+    maior = maximo
+    tentativas = 0
+    resposta = -1
+    while resposta != 0 and menor <= maior:
+        palpite = (menor + maior) // 2
+        tentativas += 1
+        print("Meu palpite:", palpite)
+        resposta = ler_resposta()
+        if resposta == -1:
+            maior = palpite - 1
+        elif resposta == 1:
+            menor = palpite + 1
+    if resposta == 0:
+        print("Acertei em", tentativas, "tentativas!")
+    else:
+        print("Suas respostas foram inconsistentes!")
+def escolher_modo():
+    while True:
+        modo = input("Quem vai adivinhar? (1 - você, 2 - computador): ").strip()
+        if modo == "1" or modo == "2":
+            return modo
+        print("Digite 1 ou 2.")
+def jogar():
+    modo = escolher_modo()
+    if modo == "1":
+        usuario_adivinha()
+    else:
+        computador_adivinha()
+jogar()
