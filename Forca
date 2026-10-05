@@ -1,0 +1,69 @@
+from random import choice
+
+LISTA = ["banana", "laranja", "maca", "abacaxi", "kiwi"]
+VIDAS = 6
+
+def atualizar_oculta(palavra, palavra_oculta, letra):
+    palavra_aux = ""
+    for i in range(len(palavra)):
+        if letra == palavra[i]:
+            palavra_aux += letra + " "
+        else:
+            palavra_aux += palavra_oculta[2 * i] + " "
+    return palavra_aux
+def ler_chute(tentadas):
+    while True:
+        chute = input("Digite uma letra ou a palavra inteira: ").strip().lower()
+        if not chute.isalpha():
+            print("Digite somente letras!")
+        elif len(chute) == 1 and chute in tentadas:
+            print("Você já tentou essa letra!")
+        else:
+            return chute
+def jogar_partida():
+    palavra = choice(LISTA)
+    palavra_oculta = "_ " * len(palavra)
+    tentadas = ""
+    vidas = VIDAS
+    venceu = False
+    while vidas > 0 and not venceu:
+        print()
+        print(palavra_oculta)
+        print("Vidas:", vidas)
+        print("Letras tentadas:", tentadas)
+        chute = ler_chute(tentadas)
+        if len(chute) > 1:
+            if chute == palavra:
+                venceu = True
+            else:
+                vidas -= 1
+                print("Essa não é a palavra!")
+        elif chute in palavra:
+            tentadas += chute
+            palavra_oculta = atualizar_oculta(palavra, palavra_oculta, chute)
+            venceu = "_" not in palavra_oculta
+            print("Acertou a letra!")
+        else:
+            tentadas += chute
+            vidas -= 1
+            print("Errou")
+    print()
+    if venceu:
+        print("Parabéns! Você acertou a palavra:", palavra)
+    else:
+        print("Você perdeu! A palavra era:", palavra)
+def perguntar_reinicio():
+    while True:
+        resposta = input("Jogar de novo? (s/n): ").strip().lower()
+        if resposta == "s":
+            return True
+        if resposta == "n":
+            return False
+        print("Digite s ou n.")
+def jogar():
+    jogando = True
+    while jogando:
+        jogar_partida()
+        jogando = perguntar_reinicio()
+    print("Fim de jogo!")
+jogar()
