@@ -33,9 +33,6 @@ def drawSpiral(t):
     for i in range(40): # 40 voltas
         t.fd(i * 1.5) # compactar a espiral
         t.lt(15) # curvar a espiral
-
-
-
 #fractal de árvore
 def treeFractal(t, size, angle, nivel):
     if size < 40: 
@@ -47,9 +44,7 @@ def treeFractal(t, size, angle, nivel):
     t.fd(size) 
     treeFractal(t, size * 0.8, angle, nivel - 1) 
     t.back(size) #tartaruga na base do galho 
-
     pencolor(0, 255 // nivel, 0) #cor da caneta variando com o nível da árvore
-
     #esquerdo 
     t.lt(2 * angle)
     t.fd(size) 
