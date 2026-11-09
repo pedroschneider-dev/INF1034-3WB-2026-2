@@ -1,3 +1,4 @@
+#ARQUIVOS NA PASTA IMAGENS E AUDIO
 import pygame
 import sys
 import os
